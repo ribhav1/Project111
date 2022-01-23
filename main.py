@@ -24,6 +24,7 @@ def random_set_of_mean(counter):
 
 def show_fig(mean_list):
     df = mean_list
+    sample_mean = statistics.mean(df)
 
     fig = ff.create_distplot([df], ['claps'], show_hist=False)
 
@@ -38,9 +39,14 @@ def show_fig(mean_list):
     fig.add_trace(go.Scatter(x = [third_stdev_start, third_stdev_start], y = [0, 0.17], mode = 'lines', name = 'third_stdev_start'))
     fig.add_trace(go.Scatter(x = [third_stdev_end, third_stdev_end], y = [0, 0.17], mode = 'lines', name = 'third_stdev_end'))
 
+    fig.add_trace(go.Scatter(x = [sample_mean, sample_mean], y = [0, 0.17], mode = 'lines', name = 'sample_mean'))
+
     fig.show()
 
-    z_score_value = (statistics.mean(df) - population_mean) / (population_stdev)
+    if sample_mean > population_mean:
+        print('Intervention successful')
+
+    z_score_value = (sample_mean - population_mean) / (population_stdev)
     print('Z score value: ', str(z_score_value))
 
 def setup():
